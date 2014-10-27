@@ -30,7 +30,16 @@ public :
     std::string cm;
 };
  
- 
+class D:public B
+{
+	public :
+    void dfun()
+    {
+        std::cout << dm;
+    }
+    std::string dm;
+};
+
 int main()
 {
     C ci;
@@ -46,9 +55,16 @@ int main()
     (pb->*pbm)();
  
     // case 2:   5.2.10.9 ISO/IEC 14882:2003(E)
-    pbm = reinterpret_cast<void (B::*)()>(pcm); // VS2012 says :error C2440: “reinterpret_cast”: 无法从“void (__thiscall C::* )(void)”转换为“void (__thiscall B::* )(void)”
+  //  pbm = reinterpret_cast<void (B::*)()>(pcm); // VS2012 says :error C2440: “reinterpret_cast”: 无法从“void (__thiscall C::* )(void)”转换为“void (__thiscall B::* )(void)”
     // 你妹,static_cast 都能过的,reinterpret_cast就变错误了.reinterpret_cast只是简单的通过二进制进行重新解释，没有任何的类型检测！
 	std::cout << sizeof(&B::bfun)<<std::endl;
+	
+	D di ;
+	di.dm = "dddddd";
+	di.bm = "dddbbbbbb";
+	
+	B b = static_cast<B>(di);	//基类对象的构造函数在派生类中被调用。
+	
     system("pause");
     return 0;
 };
